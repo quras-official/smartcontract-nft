@@ -3,6 +3,6 @@ https://github.com/quras-official/smartcontract-nft
 
 Non-Fungible Token also known as NFT.
 
-# License: MIT
+## License: MIT
 
-# Author: Quras dev
+## Author: Quras dev
