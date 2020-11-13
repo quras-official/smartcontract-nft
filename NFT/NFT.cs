@@ -14,8 +14,10 @@ namespace NFT
         [DisplayName("approval")]
         public static event Action<byte[], byte[], byte[]> Approval;
 
-        private static readonly byte[] Owner = "DpRpggGCuP1qd7KSKMA7wqPMMkM2z8rQe3".ToScriptHash(); //Owner Address
+        private static readonly byte[] Owner = "DX4TWAha5pM9hVsxD4QRoyac1ubHLMJXqC".ToScriptHash(); //Owner Address
         private static readonly BigInteger TotalSupplyValue = 10000000000000000;
+
+        private static readonly String version = "v1.1";
 
         public static object Main(string method, object[] args)
         {
@@ -54,6 +56,8 @@ namespace NFT
                 if (method == "tokenOfOwnerByIndex") return TokenOfOwnerByIndex((byte[])args[0], ((byte[])args[1]).AsBigInteger());
 
                 if (method == "tokenMetadata") return TokenMetadata((byte[])args[0]);
+
+                if (method == "version") return Version();
             }
             return false;
         }
@@ -270,19 +274,21 @@ namespace NFT
             return tokenLinks.Get(tokenId);
         }
 
+        [DisplayName("version")]
+        public static string Version()
+        {
+            return version;
+        }
+
         private static bool AddToTokenList(byte[] address, byte[] tokenId)
         {
             if (address.Length != 20)
                 throw new InvalidOperationException("The parameter account SHOULD be 20-byte array.");
             if (tokenId.Length <= 0)
                 throw new InvalidOperationException("The parameter tokenId SHOULD be byte array.");
+            BigInteger balance = BalanceOf(address);
             StorageMap ownerTokens = Storage.CurrentContext.CreateMap(nameof(ownerTokens));
-            for (BigInteger i = 1; i <= TotalSupplyValue; i=i+1)
-                if (ownerTokens.Get(address.Concat(i.AsByteArray())) == null)
-                {
-                    ownerTokens.Put(address.Concat(i.AsByteArray()), tokenId);
-                    break;
-                }
+            ownerTokens.Put(address.Concat(balance.AsByteArray()), tokenId);
             return true;
         }
 
