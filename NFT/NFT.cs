@@ -14,10 +14,10 @@ namespace NFT
         [DisplayName("approval")]
         public static event Action<byte[], byte[], byte[]> Approval;
 
-        private static readonly byte[] Owner = "DX4TWAha5pM9hVsxD4QRoyac1ubHLMJXqC".ToScriptHash(); //Owner Address
+        private static readonly byte[] Owner = "DUyj6gC6wUHpY1368HufKs6dwpW69sLimt".ToScriptHash(); //Owner Address
         private static readonly BigInteger TotalSupplyValue = 10000000000000000;
 
-        private static readonly String version = "v1.1";
+        private static readonly String version = "v1.0";
 
         public static object Main(string method, object[] args)
         {
